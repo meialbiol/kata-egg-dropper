@@ -17,6 +17,12 @@ class EggDropperTest extends PHPUnit_Framework_TestCase {
         $minDrops100 = $eggDropper->minEggDropper100();
         $this->assertTrue(gettype($minDrops100) == 'integer');
     }
+
+    public function test_throw_one_egg(){
+        $eggDropper = new EggDropper();
+        $minDrops100 = $eggDropper->minEggDropper100();
+        $this->assertEquals(1, $minDrops100);
+    }
     
 }
  
