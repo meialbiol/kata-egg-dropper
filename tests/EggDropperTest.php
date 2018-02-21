@@ -7,19 +7,24 @@ use PHPUnit_Framework_TestCase;
 
 class EggDropperTest extends PHPUnit_Framework_TestCase {
 
+    private $eggDropper;
+
+    public function setUp(){
+        $this->eggDropper = new EggDropper();
+    }
     public function test_EggDropper_exists(){
-        $eggDropper = new EggDropper();
+        $eggDropper = $this->eggDropper;
         $this->assertInstanceOf('Kata\EggDropper', $eggDropper);
     }
 
     public function test_minEggDropper100_returns_integer(){
-        $eggDropper = new EggDropper();
+        $eggDropper = $this->eggDropper;
         $minDrops100 = $eggDropper->minEggDropper100();
         $this->assertTrue(gettype($minDrops100) == 'integer');
     }
 
-    public function test_throw_one_egg(){
-        $eggDropper = new EggDropper();
+    public function test_drop_one_egg(){
+        $eggDropper = $this->eggDropper;
         $minDrops100 = $eggDropper->minEggDropper100();
         $this->assertEquals(1, $minDrops100);
     }
