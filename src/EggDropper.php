@@ -6,13 +6,18 @@ class EggDropper{
     protected $minDrops = 0;
     protected $floor = 0;
     protected $broken = false;
+    protected $eggNumber;
+    protected $result;
 
-    public function minEggDropper100(){
-        $this->drop();
-        while(!$this->isBroken() && $this->floor < 100){
-            $this->upFloor();
+    public function minEggDropper100($eggNumber = 1){
+        $this->eggNumber = $eggNumber;
+        while($this->floor < 100 && ($this->eggNumber > 0)){
+            $this->drop();
+            $this->result[$this->eggNumber] = $this->minDrops;
+            $this->checkIsBroken();
         }
-        return $this->minDrops;
+
+        return min($this->result);
     }
 
     protected function drop()
@@ -24,8 +29,20 @@ class EggDropper{
         $this->floor++;
     }
 
-    protected function isBroken(){
+    protected function checkIsBroken(){
         $this->broken = (bool) rand(0,1);
-        return $this->broken;
+        if($this->broken && $this->eggNumber != 0){
+            $this->changeEgg();
+        }else{
+            $this->upFloor();
+        }
+
+    }
+
+    protected function changeEgg()
+    {
+        $this->eggNumber--;
+        $this->floor = 0;
+        $this->minDrops = 0;
     }
 }
