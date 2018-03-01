@@ -8,7 +8,7 @@ class EggDropper{
     protected $broken = false;
     protected $eggNumber;
     protected $result;
-    protected $maxFloor;
+    protected $maxFloor = 2;
 
     public function minEggDropper100($eggNumber = 1){
         $this->eggNumber = $eggNumber;
@@ -23,29 +23,15 @@ class EggDropper{
 
     public function minEggDropper2($eggNumber = 2){
         $this->eggNumber = $eggNumber;
-        while($this->floor < 100 && ($this->eggNumber > 0)){
-            $this->drop();
-            $this->result[$this->eggNumber] = [
-                'floor' => $this->floor,
-                'drops' => $this->minDrops
-            ];
-            $this->checkIsBroken();
-        }
+        $this->startDropingEggs();
         return $this->minDropsFromHighestFloor();
     }
 
     public function minEggDropperX($eggNumber, $floorNumber){
         $this->eggNumber = $eggNumber;
         $this->maxFloor = $floorNumber;
-        while($this->eggNumber > 0){
-            $this->drop();
-            $this->result[$this->eggNumber] = [
-                'floor' => $this->floor,
-                'drops' => $this->minDrops
-            ];
-            $this->checkIsBroken();
-        }
 
+        $this->startDropingEggs();
         return $this->minDropsFromHighestFloor();
 
     }
@@ -88,5 +74,17 @@ class EggDropper{
             }
         }
         return $minDrops;
+    }
+
+    protected function startDropingEggs()
+    {
+        while ($this->eggNumber > 0) {
+            $this->drop();
+            $this->result[$this->eggNumber] = [
+                'floor' => $this->floor,
+                'drops' => $this->minDrops
+            ];
+            $this->checkIsBroken();
+        }
     }
 }
